@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
-
+from django.conf import settings
+import uuid
 
 # Create your models here.
 
@@ -9,7 +10,12 @@ from django.utils.timezone import now
 # - Description
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
-
+class CarMake(models.Model):
+    name = models.CharField(max_length=20, default="Name")
+    description = models.CharField(max_length=200, default="Description")
+    def __str__(self):
+        return "Name: " + self.name + "," + \
+               "Description: " + self.description
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 # - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
@@ -19,7 +25,24 @@ from django.utils.timezone import now
 # - Year (DateField)
 # - Any other fields you would like to include in car model
 # - __str__ method to print a car make object
-
+class CarModel(models.Model):
+    SEDAN = 'sedan'
+    SUV = 'suv'
+    WAGON = 'wagon'
+    COUPE= 'coupe'
+    VERSIONS = [
+        (SEDAN, 'Sedan'),
+        (SUV, 'SUV'),
+        (WAGON, 'Wagon'),
+        (COUPE, 'Coupe')
+    ]
+    make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    dealerId = models.IntegerField(default="Name")
+    name = models.CharField(max_length=20, default="Car Model")
+    version = models.CharField(max_length=10, choices=VERSIONS, default=SEDAN)
+    year = models.IntegerField(default="0000")
+    def __str__(self):
+        return "Model: " + self.name 
 
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 
