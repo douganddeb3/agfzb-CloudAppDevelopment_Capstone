@@ -8,7 +8,8 @@ urlpatterns = [
     # route is a string contains a URL pattern
     # view refers to the view function
     # name the URL
-
+    path(route='', view=views.get_dealerships, name='index')
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     # path for about view
 
     # path for contact us view
