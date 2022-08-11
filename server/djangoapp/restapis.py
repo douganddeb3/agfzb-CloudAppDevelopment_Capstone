@@ -9,12 +9,10 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    print(kwargs)
-    print("GET from {} ".format(url))
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params=kwargs)
+                                    params=kwargs['st'])
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -38,7 +36,6 @@ def get_dealers_from_cf(url, **kwargs):
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]
-        print("********************************************")
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -59,11 +56,10 @@ def get_dealers_by_state(url, st):
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]
-        print("********************************************")
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
-            dealer_doc = dealer["doc"]
+            dealer_doc = dealer
             # Create a CarDealer object with values in `doc` object
             dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
                                    id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],

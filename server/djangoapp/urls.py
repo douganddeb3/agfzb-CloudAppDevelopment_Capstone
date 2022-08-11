@@ -8,6 +8,7 @@ urlpatterns = [
     # route is a string contains a URL pattern
     # view refers to the view function
     # name the URL
+    path(route='<str:st>/', view=views.get_dealerships_by_state, name='get_dealers_by_state'),
     path(route='', view=views.get_dealerships, name='index'),
     # path for about view
 
@@ -23,7 +24,6 @@ urlpatterns = [
     path(route="about/", view=views.about, name='about'),
     path(route="contact/", view=views.contact, name='contact'),
     # path for dealer reviews view
-    path(route='<str:st>/" "', view=views.get_dealerships_by_state, name='get_dealers_by_state'),
     # path for add a review view
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
