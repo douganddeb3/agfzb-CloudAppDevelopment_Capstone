@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 from .models import CarDealer, CarMake, CarModel
 # from .restapis import related methods
-from .restapis import get_dealers_from_cf, get_request, get_dealers_by_state
+from .restapis import get_dealers_from_cf, get_request, get_dealers_by_state, get_dealer_reviews_from_cf, get_dealer_by_id
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -110,8 +110,11 @@ def get_dealerships_by_state(request, st):
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealerships_by_id(request, dealer_id):
+    if request.method == "GET":
+        url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"    
+        dealer_details = get_dealer_by_id(url, dealerId)
+        return HttpResponse(dealer_details)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):

@@ -9,17 +9,17 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
+    
     try:
-        if kwargs['st']:
-        # Call get method of requests library with URL and parameters
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                        params=kwargs['st'])
+        # if kwargs['st']:    
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                                    params=kwargs['st'])
         # elif kwargs['dealerId']:
         #     response = requests.get(url, headers={'Content-Type': 'application/json'},
         #                                 params=kwargs['dealerId']) 
-        else:
-             response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                        params='')          
+    else:
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                            params='')          
     except:
         # If any error occurs
         print("Network exception occurred")
@@ -56,6 +56,28 @@ def get_dealers_from_cf(url):
 
     return results
 
+def get_dealer_by_id(url, dealerId):
+    results = [] 
+    # Call get_request with a URL parameter
+    json_result = get_request(url, dealerId=dealerId)
+    if json_result:
+        # Get the row list in JSON as dealers
+        dealers = json_result["body"]
+        # For each dealer object
+        for dealer in dealers:
+            # Get its content in `doc` object
+            dealer_doc = dealer
+            # Create a CarDealer object with values in `doc` object
+            dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
+                                   id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"],
+                                   short_name=dealer_doc["short_name"],state=dealer_doc["state"],
+                                   st=dealer_doc["st"], zip=dealer_doc["zip"])
+            results.append(dealer_obj)
+
+    return results
+
+
+
 def get_dealers_by_state(url, st):
     results = [] 
     # Call get_request with a URL parameter
@@ -91,7 +113,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
-            dealer_doc = dealer["doc"]
+            dealer_doc = dealer
             # Create a CarDealer object with values in `doc` object
             dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                    review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
