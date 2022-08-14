@@ -14,16 +14,17 @@ def get_request(url, **kwargs):
         # Call get method of requests library with URL and parameters
             response = requests.get(url, headers={'Content-Type': 'application/json'},
                                         params=kwargs['st'])
-        elif kwargs['dealerId']:
-            response = requests.get(url, headers={'Content-Type': 'application/json'},
-                                        params=kwargs['dealerId']) 
+        # elif kwargs['dealerId']:
+        #     response = requests.get(url, headers={'Content-Type': 'application/json'},
+        #                                 params=kwargs['dealerId']) 
         else:
-             response = requests.get(url, headers={'Content-Type': 'application/json'},)          
+             response = requests.get(url, headers={'Content-Type': 'application/json'},
+                                        params='')          
     except:
         # If any error occurs
         print("Network exception occurred")
-    status_code = response.status_code
-    print("With status {} ".format(status_code))
+        status_code = response.status_code
+        print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
 
@@ -34,10 +35,11 @@ def get_request(url, **kwargs):
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 
 
-def get_dealers_from_cf(url, **kwargs):
+def get_dealers_from_cf(url):
     results = [] 
     # Call get_request with a URL parameter
     json_result = get_request(url)
+    print('JSON RESULT CF')
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]
