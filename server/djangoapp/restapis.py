@@ -109,9 +109,9 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
     results=[]
-    deal = {"dealerId":dealer_id}
+    dealerId = dealer_id
     json_result = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params= dealerId:dealer_id)
+                                    params= dealerId)
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]
