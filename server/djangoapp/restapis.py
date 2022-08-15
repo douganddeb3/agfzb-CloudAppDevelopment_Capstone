@@ -10,21 +10,24 @@ from requests.auth import HTTPBasicAuth
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
     
-    try:
-        # if kwargs['st']:    
+    # try:
+    if 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
         # elif kwargs['dealerId']:
         #     response = requests.get(url, headers={'Content-Type': 'application/json'},
         #                                 params=kwargs['dealerId']) 
-    else:
+    elif 'dealerId' in kwargs:
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                            params=kwargs['dealerId'])
+    else: 
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params='')          
-    except:
-        # If any error occurs
-        print("Network exception occurred")
-        status_code = response.status_code
-        print("With status {} ".format(status_code))
+    # except:
+    #     # If any error occurs
+    #     print("Network exception occurred")
+    #     status_code = response.status_code
+    #     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
 
