@@ -10,12 +10,8 @@ urlpatterns = [
     # name the URL
     path(route='<int:dealerId>/', view=views.get_dealerships_by_id, name='get_dealers_by_state'),
     path(route='<str:st>/', view=views.get_dealerships_by_state, name='get_dealers_by_state'),
+    path('dealer/<int:dealer_id>/', views.get_dealer_details, name='dealer_details'),
     path(route='', view=views.get_dealerships, name='index'),
-    # path for about view
-
-    # path for contact us view
-
-    # path for registration
     path(route='register/', view=views.registration_request, name='register'),
     # path for login
     path(route='login/', view=views.login_request, name='login'),
@@ -24,7 +20,5 @@ urlpatterns = [
     path(route='',view=views.get_dealerships, name='index'),
     path(route="about/", view=views.about, name='about'),
     path(route="contact/", view=views.contact, name='contact'),
-    # path for dealer reviews view
-    # path for add a review view
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -109,13 +109,19 @@ def get_dealerships_by_state(request, st):
         return HttpResponse(dealer_names)
 
 
-# Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealerships_by_id(request, dealer_id):
     if request.method == "GET":
         url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"    
         dealer_details = get_dealer_by_id(url, dealerId)
         return HttpResponse(dealer_details)
 
+# Create a `get_dealer_details` view to render the reviews of a dealer
+def get_dealer_details(request, dealer_id):
+    if request.method == "GET":
+        url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
+        dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
+        return HttpResponse(dealer_reviews)
+        
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
