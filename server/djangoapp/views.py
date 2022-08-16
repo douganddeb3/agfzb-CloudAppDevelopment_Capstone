@@ -117,6 +117,7 @@ def get_dealerships_by_id(request, dealerId):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, dealer_id):
+    # dealer_id = "1"
     print(type(dealer_id))
     if request.method == "GET":
         print("did we get here?")

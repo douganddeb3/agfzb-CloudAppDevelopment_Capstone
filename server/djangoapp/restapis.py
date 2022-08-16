@@ -21,9 +21,11 @@ def get_request(url, **kwargs):
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params=kwargs['dealerId'])
     elif 'dealer_id' in kwargs:
-        print(f"KWARGS  {type(kwargs['dealer_id'])}")
+        print(kwargs.get('dealer_id').replace("dealer_id","dealerId",2))
+        dealerId=kwargs.get('dealer_id').replace("dealer_id","dealerId")
+        print(f'dealerId is {dealerId}')
         response = requests.get(url, headers={'Content-Type': 'application/json'},
-                            params=kwargs['dealer_id'])
+                            params= dealerId)
     else: 
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params='')          
@@ -129,7 +131,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                    review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                    car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
-                                   sentiment=dealer_doc["sentiment"], id=dealer_doc["id"])
+                                   id=dealer_doc["id"])
             results.append(dealer_obj)
 
     return results

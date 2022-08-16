@@ -8,7 +8,7 @@ urlpatterns = [
     # route is a string contains a URL pattern
     # view refers to the view function
     # name the URL
-    path(route='dealer/<int:dealer_id>', view=views.get_dealer_details, name='get_dealer_details'),
+    path(route='dealer/<str:dealer_id>', view=views.get_dealer_details, name='get_dealer_details'),
     path(route='<int:dealerId>/', view=views.get_dealerships_by_id, name='get_dealers_by_id'),
     path(route='<str:st>/', view=views.get_dealerships_by_state, name='get_dealers_by_state'),
     path(route='', view=views.get_dealerships, name='index'),
