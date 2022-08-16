@@ -1,7 +1,7 @@
 import requests
 import json
 # import related models here
-from .models import CarDealer
+from .models import CarDealer, CarModel, CarMake, DealerReview
 from requests.auth import HTTPBasicAuth
 
 
@@ -20,6 +20,10 @@ def get_request(url, **kwargs):
     elif 'dealerId' in kwargs:
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params=kwargs['dealerId'])
+    elif 'dealer_id' in kwargs:
+        print(f"KWARGS  {type(kwargs['dealer_id'])}")
+        response = requests.get(url, headers={'Content-Type': 'application/json'},
+                            params=kwargs['dealer_id'])
     else: 
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params='')          
@@ -109,9 +113,11 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
     results=[]
-    dealerId = dealer_id
-    json_result = requests.get(url, headers={'Content-Type': 'application/json'},
-                                    params= dealerId)
+    dealerId = {"dealer_id":dealer_id}
+    print(f'DEALERID= {dealerId}')
+    json_result = get_request(url, dealer_id=dealer_id)
+    # json_result = requests.get(url, headers={'Content-Type': 'application/json'},
+    #                                 params= dealerId['dealerId'])
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]

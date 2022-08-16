@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-from .models import CarDealer, CarMake, CarModel
+from .models import CarDealer, CarMake, CarModel, DealerReview
 # from .restapis import related methods
 from .restapis import get_dealers_from_cf, get_request, get_dealers_by_state, get_dealer_reviews_from_cf, get_dealer_by_id
 from django.contrib.auth import login, logout, authenticate
@@ -109,7 +109,7 @@ def get_dealerships_by_state(request, st):
         return HttpResponse(dealer_names)
 
 
-def get_dealerships_by_id(request, dealer_id):
+def get_dealerships_by_id(request, dealerId):
     if request.method == "GET":
         url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"    
         dealer_details = get_dealer_by_id(url, dealerId)
@@ -117,7 +117,9 @@ def get_dealerships_by_id(request, dealer_id):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 def get_dealer_details(request, dealer_id):
+    print(type(dealer_id))
     if request.method == "GET":
+        print("did we get here?")
         url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
         dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
         return HttpResponse(dealer_reviews)
