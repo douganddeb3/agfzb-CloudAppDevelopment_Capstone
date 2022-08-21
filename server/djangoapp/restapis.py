@@ -11,7 +11,9 @@ from requests.auth import HTTPBasicAuth
 def get_request(url, **kwargs):
     
     # try:
-    if 'st' in kwargs:    
+    if 'api_key' in kwargs:
+        pass
+    elif 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
         # elif kwargs['dealerId']:
@@ -137,9 +139,11 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
-# def analyze_review_sentiments(text):
+def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-
+    api_key ='0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD'
+    url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/0d91b059-a9be-4379-b318-18363185ca53'
+     
 
 
