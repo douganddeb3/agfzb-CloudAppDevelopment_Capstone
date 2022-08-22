@@ -3,6 +3,9 @@ import json
 # import related models here
 from .models import CarDealer, CarModel, CarMake, DealerReview
 from requests.auth import HTTPBasicAuth
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions
 
 
 # Create a `get_request` to make HTTP GET requests
@@ -12,7 +15,23 @@ def get_request(url, **kwargs):
     
     # try:
     if 'api_key' in kwargs:
-        pass
+        authenticator = IAMAuthenticator(kwargs['apikey'])
+        natural_language_understanding = NaturalLanguageUnderstandingV1(
+        version='2022-04-07',
+        authenticator=authenticator)
+
+        natural_language_understanding.set_service_url(kwargs['url'])
+
+        response = natural_language_understanding.analyze(
+        text='IBM is an American multinational technology company '
+        'headquartered in Armonk, New York, United States, '
+        'with operations in over 170 countries.',
+        features=Features(
+        entities=EntitiesOptions(emotion=True, sentiment=True, limit=2),
+        keywords=KeywordsOptions(emotion=True, sentiment=True,
+                                 limit=2))).get_result()
+
+        print(json.dumps(response, indent=2))
     elif 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
@@ -134,16 +153,18 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                    review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                    car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                    id=dealer_doc["id"])
+            dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
             results.append(dealer_obj)
 
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
-def analyze_review_sentiments(text):
+def analyze_review_sentiments(dealerReview):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
     api_key ='0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD'
     url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/0d91b059-a9be-4379-b318-18363185ca53'
-     
+    analyzed_review = get_result(url, api_key ='0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD')
+    return analyzed_review
 
 
