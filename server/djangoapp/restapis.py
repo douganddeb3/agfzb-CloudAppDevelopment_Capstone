@@ -13,26 +13,7 @@ from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptio
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
     
-    # try:
-    if 'api_key' in kwargs:
-        authenticator = IAMAuthenticator(kwargs['apikey'])
-        natural_language_understanding = NaturalLanguageUnderstandingV1(
-        version='2022-04-07',
-        authenticator=authenticator)
-
-        natural_language_understanding.set_service_url(kwargs['url'])
-
-        response = natural_language_understanding.analyze(
-        text='IBM is an American multinational technology company '
-        'headquartered in Armonk, New York, United States, '
-        'with operations in over 170 countries.',
-        features=Features(
-        entities=EntitiesOptions(emotion=True, sentiment=True, limit=2),
-        keywords=KeywordsOptions(emotion=True, sentiment=True,
-                                 limit=2))).get_result()
-
-        print(json.dumps(response, indent=2))
-    elif 'st' in kwargs:    
+    if 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
         # elif kwargs['dealerId']:
@@ -50,20 +31,8 @@ def get_request(url, **kwargs):
     else: 
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params='')          
-    # except:
-    #     # If any error occurs
-    #     print("Network exception occurred")
-    #     status_code = response.status_code
-    #     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
-
-# Create a `post_request` to make HTTP POST requests
-# e.g., response = requests.post(url, params=kwargs, json=payload)
-
-
-# Create a get_dealers_from_cf method to get dealers from a cloud function
-
 
 def get_dealers_from_cf(url):
     results = [] 
@@ -139,8 +108,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     dealerId = {"dealer_id":dealer_id}
     print(f'DEALERID= {dealerId}')
     json_result = get_request(url, dealer_id=dealer_id)
-    # json_result = requests.get(url, headers={'Content-Type': 'application/json'},
-    #                                 params= dealerId['dealerId'])
+
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["body"]
@@ -153,6 +121,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                    review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                    car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                    id=dealer_doc["id"])
+            print(f'dealer_obj is {dealer_obj}')
             dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
             results.append(dealer_obj)
 
@@ -160,11 +129,14 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 def analyze_review_sentiments(dealerReview):
-# - Call get_request() with specified arguments
-# - Get the returned sentiment label such as Positive or Negative
-    api_key ='0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD'
-    url = 'https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/0d91b059-a9be-4379-b318-18363185ca53'
-    analyzed_review = get_result(url, api_key ='0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD')
-    return analyzed_review
 
-
+    print(f'dealelReview is {dealerReview}')
+    url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/54a42847-84c8-479c-be82-0f99e213d067"
+    api_key = "0d994aayHKIY2j2fUUcxvqGslY4UTwWjxoX9x_Ae0OuD"
+    authenticator = IAMAuthenticator(api_key)
+    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
+    natural_language_understanding.set_service_url(url)
+    response = natural_language_understanding.analyze( text=dealerReview+" hello hello hello",features=Features(sentiment=SentimentOptions(targets=[text+"hello hello hello"]))).get_result()
+    label=json.dumps(response, indent=2)
+    label = response['sentiment']['document']['label']
+    print(f('label is {label}'))
