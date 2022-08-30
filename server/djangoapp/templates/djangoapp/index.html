@@ -48,6 +48,26 @@
         </div>
     </nav>
     <!--Add a dealer table here -->
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Dealer</th>
+            <th scope="col">City</th>
+            <th scope="col">State</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in city %}  
+          <tr>
+            <th scope="row">{{id}}</th>
+            <td>{{full_name}}</td>
+            <td>{{city}}</td>
+            <td>{{state}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
     </body>
 
