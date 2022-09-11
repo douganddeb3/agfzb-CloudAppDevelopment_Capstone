@@ -28,8 +28,8 @@ DEBUG = True
 APPEND_SLASH = True
 
 ALLOWED_HOSTS = ["localhost", 
-                 "dd3.mybluemix.net",
-                 "dd3.mybluemix.net/static",
+                 "dnel.mybluemix.net",
+                 "dnel.mybluemix.net/static",
 ]
 
 
