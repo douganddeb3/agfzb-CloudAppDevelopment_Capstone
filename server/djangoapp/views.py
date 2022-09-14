@@ -90,7 +90,8 @@ def registration_request(request):
 # Update the `get_dealerships` view to render the index page with a list of dealerships
 def get_dealerships(request):
     if request.method == "GET":
-        url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"
+        url = "https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
+        # https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
         dealer_list = get_dealers_from_cf(url)
         # Concat all dealer's short name
