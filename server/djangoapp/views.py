@@ -98,22 +98,19 @@ def get_dealerships(request):
         # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
         #return HttpResponse(dealer_names)
+        context={}
+        dealers_temp=[]
         for dealer in dealer_list:
             print(dealer.city)
-            context={"city":dealer.city,
-                     "state":dealer.state,
-                     "full_name":dealer.full_name,
-                     "id": dealer.id}
-        # context['length']= range(0,len(context))
-        print(len(context))
-            # context['name']={id:dealer.id,
-            #               full_name:dealer.full_name,
-            #               city:dealer.city,
-            #               state:dealer.state}
-            # i+=1
-            # print(context['city'])
-        print(context)    
-        return render(request, 'djangoapp/index.html', context)
+            dealers_temp.append([{"city":dealer.city},
+                     {"state":dealer.state},
+                     {"full_name":dealer.full_name},
+                     {"id": dealer.id}])
+        context['dealers']=dealers_temp   
+        
+           
+  
+        return render(request, 'djangoapp/index.html', {'dealers':context['dealers']})
 
 
 def get_dealerships_by_state(request, st):

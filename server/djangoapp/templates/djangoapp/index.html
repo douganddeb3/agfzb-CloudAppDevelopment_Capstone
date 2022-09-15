@@ -58,12 +58,12 @@
           </tr>
         </thead>
         <tbody>
-          {% for i in city %}  
+          {% for deal in dealers %}  
           <tr>
-            <th scope="row">{{id}}</th>
-            <td>{{full_name}}</td>
-            <td>{{city}}</td>
-            <td>{{state}}</td>
+            <th scope="row">{{deal}}</th>
+            <td>{{deal.full_name}}</td>
+            <td>{{deal.city}}</td>
+            <td>{{deal.state}}</td>
           </tr>
           {% endfor %}
         </tbody>

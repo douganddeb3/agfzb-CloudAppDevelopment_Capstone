@@ -3,9 +3,9 @@ import json
 # import related models here
 from .models import CarDealer, CarModel, CarMake, DealerReview
 from requests.auth import HTTPBasicAuth
-from ibm_watson import NaturalLanguageUnderstandingV1
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
+# from ibm_watson import NaturalLanguageUnderstandingV1
+# from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+# from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
 
 
 # Create a `get_request` to make HTTP GET requests
@@ -39,9 +39,11 @@ def get_dealers_from_cf(url):
     # Call get_request with a URL parameter
     json_result = get_request(url)
     print('JSON RESULT CF')
+    print(f'json_result= {json_result}')
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]
+
+        dealers = json_result
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -52,7 +54,7 @@ def get_dealers_from_cf(url):
                                    short_name=dealer_doc["short_name"],state=dealer_doc["state"],
                                    st=dealer_doc["st"], zip=dealer_doc["zip"])
             results.append(dealer_obj)
-
+    print(f'results= {results}')
     return results
 
 def get_dealer_by_id(url, dealerId):
