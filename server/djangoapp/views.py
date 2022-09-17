@@ -115,13 +115,24 @@ def get_dealerships(request):
 
 def get_dealerships_by_state(request, st):
     if request.method == "GET":
-        url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"
+        url = "https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
         # Get dealers from the URL
         dealerships = get_dealers_by_state(url,st)
         # Concat all dealer's short name
+        context={}
+        dealers_temp=[]
+        for dealer in dealerships:
+            print(dealer.city)
+            dealers_temp.append([{"city":dealer.city},
+                     {"state":dealer.state},
+                     {"full_name":dealer.full_name},
+                     {"id": dealer.id}])
+        context['dealers']=dealers_temp  
+        print(f'dealers_temp: {dealers_temp}')
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        #return HttpResponse(dealer_names)
+        return render(request, 'djangoapp/index.html', {'dealers':context['dealers']})
 
 
 def get_dealerships_by_id(request, dealerId):
