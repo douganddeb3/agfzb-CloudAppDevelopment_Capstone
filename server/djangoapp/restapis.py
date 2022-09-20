@@ -12,7 +12,6 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    st=kwargs['st']
     if 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
