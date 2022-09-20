@@ -10,7 +10,9 @@ urlpatterns = [
     # name the URL
     path(route='dealer/<str:dealer_id>', view=views.get_dealer_details, name='get_dealer_details'),
     path(route='<int:dealerId>/', view=views.get_dealerships_by_id, name='get_dealers_by_id'),
+    path(route='dealer_state_abbr/', view=views.get_dealerships_by_state_abbr, name='get_dealers_by_state_abbr'),
     path(route='<str:st>/', view=views.get_dealerships_by_state, name='get_dealers_by_state'),
+    
     path(route='', view=views.get_dealerships, name='index'),
     path(route='register/', view=views.registration_request, name='register'),
     # path for login

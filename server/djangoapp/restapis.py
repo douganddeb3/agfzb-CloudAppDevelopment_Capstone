@@ -12,13 +12,12 @@ from requests.auth import HTTPBasicAuth
 # e.g., response = requests.get(url, params=params, headers={'Content-Type': 'application/json'},
 #                                     auth=HTTPBasicAuth('apikey', api_key))
 def get_request(url, **kwargs):
-    
+    st=kwargs['st']
     if 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
-        # elif kwargs['dealerId']:
-        #     response = requests.get(url, headers={'Content-Type': 'application/json'},
-        #                                 params=kwargs['dealerId']) 
+        print(f'response line 21 is {response.text}')
+                                     
     elif 'dealerId' in kwargs:
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params=kwargs['dealerId'])
@@ -80,6 +79,7 @@ def get_dealer_by_id(url, dealerId):
 
 
 def get_dealers_by_state(url, st):
+    print(f'st line 81= {st}')
     results = [] 
     # Call get_request with a URL parameter
     json_result = get_request(url,st=st)
