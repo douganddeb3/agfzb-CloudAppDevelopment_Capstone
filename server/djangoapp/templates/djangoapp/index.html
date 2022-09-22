@@ -48,6 +48,12 @@
                     <form class="form-inline" action="{% url 'djangoapp:get_dealers_by_state_abbr' %}" method="post">
                         {% csrf_token %}
                         <div class="input-group">
+                            <select class="form-select" name="by_state" multiple action="{% url 'djangoapp:get_dealers_by_state_abbr' %}" method="post">
+                                <option selected>By State</option>
+                                <option value="TX">TX</option>
+                                <option value="NY">NY</option>
+                                <option value="MN">MN</option>
+                              </select>
                             <input type="text" class="form-control" placeholder="2 Letter State" name="state" >
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
