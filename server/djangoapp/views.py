@@ -101,7 +101,6 @@ def get_dealerships(request):
         context={}
         dealers_temp=[]
         for dealer in dealer_list:
-            print(dealer.city)
             dealers_temp.append([{"city":dealer.city},
                      {"state":dealer.state},
                      {"full_name":dealer.full_name},
