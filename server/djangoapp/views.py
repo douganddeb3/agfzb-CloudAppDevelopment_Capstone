@@ -127,8 +127,6 @@ def get_dealerships_by_state(request, st):
 
 def get_dealerships_by_state_abbr(request):
     if request.method == "POST":
-        # post= request.POST['by_state']
-        # print(f'line 130 get_abbr post = {post}')
         state=request.POST['state'].upper()
         st={}
         # A dict is being passed 
