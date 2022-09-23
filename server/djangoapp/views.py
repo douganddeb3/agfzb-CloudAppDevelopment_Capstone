@@ -94,10 +94,6 @@ def get_dealerships(request):
         # https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the URL
         dealer_list = get_dealers_from_cf(url)
-        # Concat all dealer's short name
-        # dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        #return HttpResponse(dealer_names)
         context={}
         dealers_temp=[]
         for dealer in dealer_list:
@@ -106,9 +102,6 @@ def get_dealerships(request):
                      {"full_name":dealer.full_name},
                      {"id": dealer.id}])
         context['dealers']=dealers_temp   
-        
-           
-  
         return render(request, 'djangoapp/index.html', {'dealers':context['dealers']})
 
 
@@ -134,8 +127,8 @@ def get_dealerships_by_state(request, st):
 
 def get_dealerships_by_state_abbr(request):
     if request.method == "POST":
-        post= request.POST['by_state']
-        print(f'line 138 get_abbr post = {post}')
+        # post= request.POST['by_state']
+        # print(f'line 130 get_abbr post = {post}')
         state=request.POST['state'].upper()
         st={}
         # A dict is being passed 
@@ -147,13 +140,11 @@ def get_dealerships_by_state_abbr(request):
         context={}
         dealers_temp=[]
         for dealer in dealerships:
-            print(dealer.city)
             dealers_temp.append([{"city":dealer.city},
                      {"state":dealer.state},
                      {"full_name":dealer.full_name},
                      {"id": dealer.id}])
         context['dealers']=dealers_temp  
-        print(f'dealers_temp: {dealers_temp}')
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
         # Return a list of dealer short name
         #return HttpResponse(dealer_names)
@@ -171,7 +162,6 @@ def get_dealer_details(request, dealer_id):
     # dealer_id = "1"
     print(type(dealer_id))
     if request.method == "GET":
-        print("did we get here?")
         url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
         dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
         return HttpResponse(dealer_reviews)
