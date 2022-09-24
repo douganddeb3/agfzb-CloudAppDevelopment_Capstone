@@ -18,8 +18,9 @@ def get_request(url, **kwargs):
                             params=kwargs['dealerId'])
     elif 'dealer_id' in kwargs:
         dealerId=kwargs.get('dealer_id').replace("dealer_id","dealerId")
+        print(f'dealerId ===== {dealerId}')
         response = requests.get(url, headers={'Content-Type': 'application/json'},
-                            params= dealerId)
+                            params= {'dealerId':dealerId})
     else: 
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params='')          
@@ -102,10 +103,10 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     results=[]
     dealerId = {"dealer_id":dealer_id}
     json_result = get_request(url, dealer_id=dealer_id)
-
+    print(f'json_result get dealer reviews from cf= {json_result}')
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]
+        dealers = json_result["data"]["docs"]
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -115,7 +116,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                    review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                    car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                    id=dealer_doc["id"])
-            dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
+            #dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
             results.append(dealer_obj)
 
     return results

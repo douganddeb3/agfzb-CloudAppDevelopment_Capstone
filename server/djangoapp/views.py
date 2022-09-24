@@ -160,7 +160,8 @@ def get_dealer_details(request, dealer_id):
     # dealer_id = "1"
     print(type(dealer_id))
     if request.method == "GET":
-        url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
+        url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
+        #url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
         dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
         return HttpResponse(dealer_reviews)
         
