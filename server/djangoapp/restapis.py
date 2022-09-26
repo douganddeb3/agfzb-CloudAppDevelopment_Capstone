@@ -123,16 +123,19 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 def analyze_review_sentiments(dealerReview):
-
-    print(f'dealelReview is {dealerReview}')
-    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/2feb4018-a252-49bc-a8d0-f6f31a2254b1"
-    api_key = "DQnQP7ZAiHPKQz-q2jMx8gsEDyH4sGY8G9Ppe4KSbtyJ"
-    authenticator = IAMAuthenticator(api_key)
-    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
-    natural_language_understanding.set_service_url(url)
-    response = natural_language_understanding.analyze( text=dealerReview+" hello hello hello",features=Features(sentiment=SentimentOptions(targets=[dealerReview+"hello hello hello"]))).get_result()
-    print(f'analyze response is {response}')
-    label=json.dumps(response, indent=2)
-    label = response['sentiment']['document']['label']
-    print(f('label is {label}'))
-    return(label)
+    try:
+        print(f'dealelReview is {dealerReview}')
+        url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/2feb4018-a252-49bc-a8d0-f6f31a2254b1"
+        api_key = "DQnQP7ZAiHPKQz-q2jMx8gsEDyH4sGY8G9Ppe4KSbtyJ"
+        authenticator = IAMAuthenticator(api_key)
+        natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
+        natural_language_understanding.set_service_url(url)
+        response = natural_language_understanding.analyze( text=dealerReview,features=Features(sentiment=SentimentOptions(targets=[dealerReview]))).get_result()
+        print(f'analyze response is {response}')
+        label=json.dumps(response, indent=2)
+        label = response['sentiment']['document']['label']
+        print(f'label is {label}')
+        return(label)
+    except(requests.exceptions.RequestException, ConnectionResetError) as err:
+        print("connection error")
+        return {"error": err}
