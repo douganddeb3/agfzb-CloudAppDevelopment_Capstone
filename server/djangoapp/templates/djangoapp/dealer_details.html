@@ -8,10 +8,16 @@
 </head>
 
     <body>
-
+        
     <!--Add a nav bar here -->
 
     <!-- Add reviews as cards -->
+    {% for deal in dealer_reviews %}  
+          <tr>
+            <th scope="row">{{deal.sentiment}}</th>
+            
+          </tr>
+          {% endfor %}
 
     </body>
 
