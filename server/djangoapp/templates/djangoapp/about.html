@@ -19,7 +19,13 @@
                   <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars</a>
             </div>
         </div>
-    </nav>             
+    </nav>  
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'djangoapp:index' %}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">About</li>
+        </ol>
+    </nav>           
 <div >
 <h1 style="width:500px;
 margin: 0 auto;
