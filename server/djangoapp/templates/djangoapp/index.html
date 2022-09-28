@@ -77,7 +77,7 @@
           {% for deal in dealers %}  
           <tr>
             <th scope="row">{{deal.3.id}}</th>
-            <td>{{deal.2.full_name}}</td>
+            <td><a href="{% url 'djangoapp:get_dealer_details' deal.3.id %}">{{deal.2.full_name}}</a></td>
             <td>{{deal.0.city}}</td>
             <td>{{deal.1.state}}</td>
           </tr>
