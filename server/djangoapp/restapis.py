@@ -103,7 +103,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     results=[]
     dealerId = {"dealer_id":dealer_id}
     json_result = get_request(url, dealer_id=dealer_id)
-    print(f'json_result get dealer reviews from cf= {json_result}')
+    #print(f'json_result get dealer reviews from cf= {json_result}')
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["data"]["docs"]
@@ -113,16 +113,25 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             dealer_doc = dealer
             # Create a CarDealer object with values in `doc` object
             try:
-                dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
+                if not dealer_doc["purchase"]:
+                    print("FALSEEEEEEEEEEEEEEEEEEE")
+                    dealer_obj=DealerReview(dealership="", name="", purchase=false,
+                                    review=dealer_doc["review"], purchase_date="", car_make="",
+                                    car_model="",car_year="",
+                                    id=dealer_doc["id"])
+                    print(f'FALSE DEALER_OBJ {dealer_obj}')
+                else:
+                    dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                     car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                     id=dealer_doc["id"])
                 dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
+                print(f'DEALER OBJECT IS {dealer_obj}')
                 results.append(dealer_obj)
                 print(f'results appended are {results}')
             except:
                 print(f'except results from reviews are {results}')
-                return results
+                
     print(f'results from reviews are {results}')
     return results
 
