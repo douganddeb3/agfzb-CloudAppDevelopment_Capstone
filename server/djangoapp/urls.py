@@ -9,6 +9,8 @@ urlpatterns = [
     # view refers to the view function
     # name the URL
     path(route='dealer/<str:dealer_id>', view=views.get_dealer_details, name='get_dealer_details'),
+    path('dealer_review/<int:dealer_id>/', views.add_review, name='dealer_details'),
+    path('review_post/<int:dealer_id>/', views.post_request, name='post_review'),
     path(route='<int:dealerId>/', view=views.get_dealerships_by_id, name='get_dealers_by_id'),
     path(route='dealer_state_abbr/', view=views.get_dealerships_by_state_abbr, name='get_dealers_by_state_abbr'),
     #path(route='<str:st>/', view=views.get_dealerships_by_state, name='get_dealers_by_state'),

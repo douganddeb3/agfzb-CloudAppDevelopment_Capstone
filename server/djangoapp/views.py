@@ -169,6 +169,15 @@ def get_dealer_details(request, dealer_id):
 
         
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    # pass
+    context={}
+    context['dealer']=dealer_id
+    return render(request, 'djangoapp/add_review.html', {'dealer':context['dealer']})
 
+
+def post_request(request, dealer_id):
+    # json_payload, **kwargs):
+    # pass
+    # requests.post(url, params=kwargs, json=json_payload).
+    return HttpResponse("1")
