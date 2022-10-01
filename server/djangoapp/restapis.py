@@ -115,24 +115,25 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             try:
                 if not dealer_doc["purchase"]:
                     print("FALSEEEEEEEEEEEEEEEEEEE")
-                    dealer_obj=DealerReview(dealership="", name="", purchase=false,
-                                    review=dealer_doc["review"], purchase_date="", car_make="",
-                                    car_model="",car_year="",
+                    dealer_obj=DealerReview(dealership="n", name="n", purchase=dealer_doc["purchase"],
+                                    review=dealer_doc["review"], purchase_date="0", car_make="n",
+                                    car_model="n",car_year="n",
                                     id=dealer_doc["id"])
-                    print(f'FALSE DEALER_OBJ {dealer_obj}')
+                    print(f'FALSE DEALER_OBJ REVIEW {dealer_obj.review}')
                 else:
                     dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                     car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                     id=dealer_doc["id"])
+                
                 dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
-                print(f'DEALER OBJECT IS {dealer_obj}')
+                
+                              
                 results.append(dealer_obj)
-                print(f'results appended are {results}')
+                
             except:
                 print(f'except results from reviews are {results}')
                 
-    print(f'results from reviews are {results}')
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text

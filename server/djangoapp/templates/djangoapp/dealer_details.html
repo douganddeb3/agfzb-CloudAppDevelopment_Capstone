@@ -65,9 +65,9 @@
     <!-- Add reviews as cards -->
     {% if  dealer_reviews %}
         {% for deal in dealer_reviews %}  
-        <div class="card-columns-vertical" style="width: 18rem;">
+        <div class="row row-cols-4">
                 <div class="card mt-1 text-center">
-                    <div class="card-header"><h5>{{deal.name}}</h5></div>
+                    <div class="card-header bg-primary"><h5>{{deal.name}}</h5></div>
                     <div class="card-body">
                         <p class="card-text">Sentiment: {{deal.sentiment}}</p>
                         <p class="card-text">{{deal.review}}</p>

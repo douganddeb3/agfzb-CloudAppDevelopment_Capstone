@@ -165,7 +165,6 @@ def get_dealer_details(request, dealer_id):
         #url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
         dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
         context['dealer_reviews']= dealer_reviews
-        print(f'AHAHAH {dealer_reviews}')
         return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
 
         
