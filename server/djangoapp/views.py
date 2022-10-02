@@ -180,4 +180,4 @@ def post_request(request, dealer_id):
     # json_payload, **kwargs):
     # pass
     # requests.post(url, params=kwargs, json=json_payload).
-    return HttpResponse("1")
+    return HttpResponse(dealer_id)
