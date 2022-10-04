@@ -29,38 +29,118 @@
                 <div class="form-group"> <!--Style second div with .form-group class -->
                     <label for="review"><b>{{dealer}}</b></label>
                     <input type="text" class="form-control" placeholder="Enter Review: " name="review" required> <!--Style input with .form-control class -->
-                    <label for="purchase"><b>Purchase?</b></label>
-                    <input type="text" class="form-control" placeholder="Yes/No" name="purchase" required> <!--Style input with .form-control class -->
-                    <label for="purchase_date"><b>Purchase Date</b></label>
-                    <input type="date" class="form-control" placeholder="Purchase Date" name="purchase_date" required>
-                    <label for="car_make"><b>Car Make</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Car Make " name="car_make" required>
-                    <label for="car_model"><b>Car Model</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Car Model " name="car_model" required> 
-                    <label for="car_year"><b>Car Year</b></label>
-                    <input type="number" class="form-control" placeholder="YYYY" min="1999" max="2023" name="car_year" required> 
+
+                    <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> -->
+                    <h3>Purchase?</h3>
+                    <!-- </button> -->
+                </div>
+                <div id="accordion">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">  
+                        <h5 class="mb-0">
+                          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                             <label class="form-check-label" for="flexRadioDefault1">  
+                            Yes
+                             </label>
+                          </button>
+                        </h5>
+                      </div>
+                  
+                      <div id="collapseOne" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <label for="purchase_date"><b>Purchase Date</b></label>
+                                    <input type="date" class="form-control" placeholder="Purchase Date" name="purchase_date" required>
+                                    <label for="car_make"><b>Car Make</b></label>
+                                    <input type="text" class="form-control" placeholder="Enter Car Make " name="car_make" required>
+                                    <label for="car_model"><b>Car Model</b></label>
+                                    <input type="text" class="form-control" placeholder="Enter Car Model " name="car_model" required> 
+                                    <label for="car_year"><b>Car Year</b></label>
+                                    <input type="number" class="form-control" placeholder="YYYY" min="1999" max="2023" name="car_year" required> 
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                             <label class="form-check-label" for="flexRadioDefault1">   
+                            No
+                             </label>
+                          </button>
+                        </h5>
+                      </div>
+                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            No Purchase
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div> 
+                
                     {% if message %}
                     <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
                         {{ message }}
                     </div>
                     {% endif %}
-                    <button class="btn btn-primary" type="submit">Sign up</button> <!--Style button with .btn and .btn-primary class -->
-                </div>
+                    <br><br>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Sign up</button> <!--Style button with .btn and .btn-primary class -->
+                    </div>
+                
             </div>
+        
         </form>
-        <p>
-            <!-- <a class="btn btn-primary" data-toggle=".collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-              Link with href
-            </a> -->
-            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Button with data-target
-            </button>
-          </p>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+
+
+        <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5>Purchase?</h5>  
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                     <label class="form-check-label" for="flexRadioDefault1">  
+                    Yes
+                     </label>
+                  </button>
+                </h5>
+              </div>
+          
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <label for="purchase_date"><b>Purchase Date</b></label>
+                            <input type="date" class="form-control" placeholder="Purchase Date" name="purchase_date" required>
+                            <label for="car_make"><b>Car Make</b></label>
+                            <input type="text" class="form-control" placeholder="Enter Car Make " name="car_make" required>
+                            <label for="car_model"><b>Car Model</b></label>
+                            <input type="text" class="form-control" placeholder="Enter Car Model " name="car_model" required> 
+                            <label for="car_year"><b>Car Year</b></label>
+                            <input type="number" class="form-control" placeholder="YYYY" min="1999" max="2023" name="car_year" required> 
+                </div>
+              </div>
             </div>
-        </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                     <label class="form-check-label" for="flexRadioDefault1">   
+                    No
+                     </label>
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        
        
     </body>
 </html>
