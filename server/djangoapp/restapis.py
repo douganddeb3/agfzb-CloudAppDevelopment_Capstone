@@ -46,13 +46,18 @@ def get_dealers_from_cf(url):
             results.append(dealer_obj)
     return results
 
-def get_dealer_by_id(url, dealerId):
-    results = [] 
+def get_dealer_by_id(url, dealer_id):
+    
+    dealerId={} 
+    dealerId['dealerId']=dealer_id
     # Call get_request with a URL parameter
-    json_result = get_request(url, dealerId=dealerId)
+    print(f'dealerId AAAAAAAA is {dealerId}')
+    json_result = get_request(url,dealerId=dealerId)
+    results=[]
     if json_result:
         # Get the row list in JSON as dealers
-        dealers = json_result["body"]
+        dealers = json_result
+        print(f'dealers are {dealers}')
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
