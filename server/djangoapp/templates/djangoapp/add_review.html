@@ -29,8 +29,17 @@
                 <hr>
                 <div class="form-group"> <!--Style second div with .form-group class -->
                     <label for="review"><b>{{dealer}}</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Review: " name="review" required> <!--Style input with .form-control class -->
-
+                    <!-- <input type="text" class="form-control" placeholder="Enter Review: " name="review" required> Style input with .form-control class -->
+                    <textarea class="form-control" rows="5" name="review" id="review" placeholder="Enter your review: "></textarea>
+                    <style>
+                        .form-control:focus {
+                            box-shadow:none;
+                            border-color:green;
+                            border-width:1px;
+                            box-shadow: -1px -1px 0px 1px rgba(130, 200, 0, 0.1);
+                        }
+                      </style>
+    
                     <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> -->
                     <h3>Purchase?</h3>
                     <!-- </button> -->
