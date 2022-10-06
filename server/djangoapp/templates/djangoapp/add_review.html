@@ -22,15 +22,16 @@
     <body>
     
     <!--Add review form here -->
-        <form id="MyForm" action="{% url 'djangoapp:post_review' dealer %}" method="post">
+        <form id="MyForm" action="{% url 'djangoapp:post_review' dealer.dealer %}" method="post">
             <div class="container"> <!--Style root div with .container class -->
                 {% csrf_token %}
-                <h1>{{dealer}}</h1>
+                <h1>{{dealer.name}}</h1>
+                <input type="hidden" name={{dealer.name}}>
                 <hr>
                 <div class="form-group"> <!--Style second div with .form-group class -->
-                    <label for="review"><b>{{dealer}}</b></label>
+                    <label for="review"><b>Dealer Number {{dealer.dealer}}</b></label>
                     <!-- <input type="text" class="form-control" placeholder="Enter Review: " name="review" required> Style input with .form-control class -->
-                    <textarea class="form-control" rows="5" name="review" id="review" placeholder="Enter your review: "></textarea>
+                    <textarea class="form-control" rows="5" name="review" id="review" placeholder="Enter your review: " required></textarea>
                     <style>
                         .form-control:focus {
                             box-shadow:none;
@@ -49,8 +50,8 @@
                       <div class="card-header" id="headingOne">  
                         <h5 class="mb-0">
                           <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                             <label class="form-check-label" for="flexRadioDefault1">  
+                            <input class="form-check-input" type="radio" name="purchase" id="yes_purchase" >
+                             <label class="form-check-label" for="yes_purchase">  
                             Yes
                              </label>
                           </button>
@@ -60,13 +61,13 @@
                       <div id="collapseOne" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
                             <label for="purchase_date"><b>Purchase Date</b></label>
-                                    <input type="date" class="form-control" placeholder="Purchase Date" name="purchase_date" required>
+                                    <input type="date" class="form-control" placeholder="Purchase Date" name="purchase_date" >
                                     <label for="car_make"><b>Car Make</b></label>
-                                    <input type="text" class="form-control" placeholder="Enter Car Make " name="car_make" required>
+                                    <input type="text" class="form-control" placeholder="Enter Car Make " name="car_make" >
                                     <label for="car_model"><b>Car Model</b></label>
-                                    <input type="text" class="form-control" placeholder="Enter Car Model " name="car_model" required> 
+                                    <input type="text" class="form-control" placeholder="Enter Car Model " name="car_model" > 
                                     <label for="car_year"><b>Car Year</b></label>
-                                    <input type="number" class="form-control" placeholder="YYYY" min="1999" max="2023" name="car_year" required> 
+                                    <input type="number" class="form-control" placeholder="YYYY" min="1999" max="2023" name="car_year" > 
                         </div>
                       </div>
                     </div>
@@ -74,8 +75,8 @@
                       <div class="card-header" id="headingTwo">
                         <h5 class="mb-0">
                           <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                             <label class="form-check-label" for="flexRadioDefault1">   
+                            <input class="form-check-input" type="radio" name="purchase" id="no_purchase" checked>
+                             <label class="form-check-label" for="no_purchase">   
                             No
                              </label>
                           </button>
@@ -97,17 +98,13 @@
                     {% endif %}
                     <br><br>
                     <div>
-                        <button class="btn btn-primary" type="submit">Sign up</button> <!--Style button with .btn and .btn-primary class -->
+                        <button class="btn btn-primary" type="submit">Submit Review</button> <!--Style button with .btn and .btn-primary class -->
                     </div>
                 
             </div>
         
         </form>
-        <script type="text/javascript">
-            $("#MyForm").validate({
-                ignore: ""
-            });
-        </script>
+       
 
 
        

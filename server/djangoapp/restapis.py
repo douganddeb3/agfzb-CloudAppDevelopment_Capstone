@@ -18,7 +18,6 @@ def get_request(url, **kwargs):
                             params=kwargs['dealerId'])
     elif 'dealer_id' in kwargs:
         dealerId=kwargs.get('dealer_id').replace("dealer_id","dealerId")
-        print(f'dealerId ===== {dealerId}')
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params= {'dealerId':dealerId})
     else: 
@@ -51,13 +50,11 @@ def get_dealer_by_id(url, dealer_id):
     dealerId={} 
     dealerId['dealerId']=dealer_id
     # Call get_request with a URL parameter
-    print(f'dealerId AAAAAAAA is {dealerId}')
     json_result = get_request(url,dealerId=dealerId)
     results=[]
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result
-        print(f'dealers are {dealers}')
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -81,7 +78,6 @@ def get_dealers_by_state(url, st):
     results = [] 
     # Call get_request with a URL parameter
     json_result = get_request(url,st=st)
-    # print(f'line 85 json-result is {json_result}')
     if json_result:
         # Get the row list in JSON as dealers
         # For each dealer object
@@ -108,7 +104,6 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     results=[]
     dealerId = {"dealer_id":dealer_id}
     json_result = get_request(url, dealer_id=dealer_id)
-    #print(f'json_result get dealer reviews from cf= {json_result}')
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["data"]["docs"]
@@ -119,12 +114,10 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             # Create a CarDealer object with values in `doc` object
             try:
                 if not dealer_doc["purchase"]:
-                    print("FALSEEEEEEEEEEEEEEEEEEE")
                     dealer_obj=DealerReview(dealership="n", name="n", purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date="0", car_make="n",
                                     car_model="n",car_year="n",
                                     id=dealer_doc["id"])
-                    print(f'FALSE DEALER_OBJ REVIEW {dealer_obj.review}')
                 else:
                     dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
@@ -137,25 +130,25 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                 results.append(dealer_obj)
                 
             except:
-                print(f'except results from reviews are {results}')
+                print('except')
                 
     return results
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 def analyze_review_sentiments(dealerReview):
     try:
-        print(f'dealelReview is {dealerReview}')
         url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/2feb4018-a252-49bc-a8d0-f6f31a2254b1"
         api_key = "DQnQP7ZAiHPKQz-q2jMx8gsEDyH4sGY8G9Ppe4KSbtyJ"
         authenticator = IAMAuthenticator(api_key)
         natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
         natural_language_understanding.set_service_url(url)
         response = natural_language_understanding.analyze( text=dealerReview,features=Features(sentiment=SentimentOptions(targets=[dealerReview]))).get_result()
-        print(f'response is {response}')
         label=json.dumps(response, indent=2)
         label = response['sentiment']['document']['label']
-        print(f'label is {label}')
         return(label)
     except(requests.exceptions.RequestException, ConnectionResetError) as err:
         print("connection error")
         return {"error": err}
+
+
+# def post_request(url, json_payload, **kwargs):

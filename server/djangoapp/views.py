@@ -160,7 +160,6 @@ def get_dealerships_by_id(request, dealerId):
 def get_dealer_details(request, dealer_id):
     # dealer_id = "1"
     context={}
-    print(type(dealer_id))
     if request.method == "GET":
         url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
         #url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
@@ -175,14 +174,31 @@ def add_review(request, dealer_id):
     # url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"    
     url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
     response = get_dealer_by_id(url, dealer_id)
-    print(f'addreview response is {response}')
     context={}
     context['dealer']=dealer_id
-    return render(request, 'djangoapp/add_review.html', {'dealer':context['dealer']})
-
-
-def post_request(request, dealer_id):
+    context['name']= response[0].full_name
+    return render(request, 'djangoapp/add_review.html', {'dealer':context})
+def post_review(request, dealer_id):
     # json_payload, **kwargs):
     # pass
+    if request.method == "POST":
+        review=request.POST['review']
+       # name=request.POST['name']
+    # dealership
+    # name 
+    # purchase
+    # review
+    # purchase_date
+    # car_make
+    # car_model
+    # car_year
+    # id
+    # sentiment
+
+    print(review)
+    print(name)
+    # post_request(url, json_payload, **kwargs):
+
     # requests.post(url, params=kwargs, json=json_payload).
     return HttpResponse(dealer_id)
+
