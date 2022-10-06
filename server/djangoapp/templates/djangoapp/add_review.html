@@ -26,9 +26,12 @@
             <div class="container"> <!--Style root div with .container class -->
                 {% csrf_token %}
                 <h1>{{dealer.name}}</h1>
-                <input type="hidden" name={{dealer.name}}>
+                
                 <hr>
                 <div class="form-group"> <!--Style second div with .form-group class -->
+                    <input type="hidden" name="id" value="{{dealer.dealer}}">
+                    <input type="hidden" name="name" value="{{dealer.name}}">
+                    <input type="hidden" name="dealership" value="{{dealer.dealership}}">
                     <label for="review"><b>Dealer Number {{dealer.dealer}}</b></label>
                     <!-- <input type="text" class="form-control" placeholder="Enter Review: " name="review" required> Style input with .form-control class -->
                     <textarea class="form-control" rows="5" name="review" id="review" placeholder="Enter your review: " required></textarea>

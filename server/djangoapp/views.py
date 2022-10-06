@@ -177,14 +177,21 @@ def add_review(request, dealer_id):
     context={}
     context['dealer']=dealer_id
     context['name']= response[0].full_name
+    context['dealership']= 15
     return render(request, 'djangoapp/add_review.html', {'dealer':context})
+
 def post_review(request, dealer_id):
     # json_payload, **kwargs):
     # pass
     if request.method == "POST":
-        review=request.POST['review']
-       # name=request.POST['name']
-    # dealership
+        payload ={}
+        for k,v in request.POST.items():
+            if k == "csrfmiddlewaretoken":
+                continue
+            print(f'{k} is {v}')
+            payload[k]=v
+        print(f'payload is {payload}')
+        
     # name 
     # purchase
     # review
@@ -194,9 +201,15 @@ def post_review(request, dealer_id):
     # car_year
     # id
     # sentiment
-
-    print(review)
-    print(name)
+    # print(id)
+    # print(review)
+    # print(name)
+    # print(dealership)
+    # print(f'purchase_date= {purchase_date}')
+    # print(car_make)
+    # print(car_year)
+    
+    
     # post_request(url, json_payload, **kwargs):
 
     # requests.post(url, params=kwargs, json=json_payload).
