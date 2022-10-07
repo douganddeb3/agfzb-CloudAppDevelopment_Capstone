@@ -63,9 +63,14 @@
     </nav>
 
     <!-- Add reviews as cards -->
+    <div class="container">
+    <div class="row">
+    <div class=col-12>
+        <a href="{% url 'djangoapp:add_review' dealer_reviews.0.id %}"><button>Add Review</button></a>
+    </div>    
     {% if  dealer_reviews %}
         {% for deal in dealer_reviews %}  
-        <div class="row row-cols-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="card mt-1 text-center">
                     <div class="card-header bg-primary"><h5>{{deal.name}}</h5></div>
                     <div class="card-body">
@@ -73,6 +78,7 @@
                         <p class="card-text">{{deal.review}}</p>
                     </div> 
                 </div>
+        </div>
         {% endfor %}
     {% else %}
     <div class="card-columns-vertical" style="width: 18rem;">
@@ -80,10 +86,10 @@
             <div class="card-header"><h5>No Reviews Yet</h5></div>
              
         </div>
+    </div>
     {% endif %}
-    <a href="{% url 'djangoapp:add_review' dealer_reviews.0.id %}"><button>Add Review</button></a>
-        </div>
-
+    </div>
+    </div>
     </body>
 
 </html>
