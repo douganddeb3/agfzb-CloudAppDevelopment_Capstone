@@ -151,4 +151,7 @@ def analyze_review_sentiments(dealerReview):
         return {"error": err}
 
 
-# def post_request(url, json_payload, **kwargs):
+def post_request(url, json_payload, **kwargs):
+    #pass
+    # with a post you need to add a json arg with a dict-loke object as a request body
+    return requests.post(url, params=kwargs, json=json_payload)

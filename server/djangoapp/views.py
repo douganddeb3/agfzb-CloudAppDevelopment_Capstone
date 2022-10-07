@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
 from .models import CarDealer, CarMake, CarModel, DealerReview
 # from .restapis import related methods
-from .restapis import get_dealers_from_cf, get_request, get_dealers_by_state, get_dealer_reviews_from_cf, get_dealer_by_id
+from .restapis import get_dealers_from_cf, get_request, get_dealers_by_state, get_dealer_reviews_from_cf, get_dealer_by_id, post_request
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -184,34 +184,27 @@ def post_review(request, dealer_id):
     # json_payload, **kwargs):
     # pass
     if request.method == "POST":
-        payload ={}
+        review ={}
         for k,v in request.POST.items():
             if k == "csrfmiddlewaretoken":
                 continue
+            if k == "purchase":
+                # Use request.POST.get() to get the value from the
+                # radio button, and not just whether the radio button is on or not.
+                # This is how to distinguish which radio button is selected
+                if request.POST.get('purchase') == "true":
+                    review[k] = True
+                else:
+                    review[k]= False
+                continue
             print(f'{k} is {v}')
-            payload[k]=v
-        print(f'payload is {payload}')
-        
-    # name 
-    # purchase
-    # review
-    # purchase_date
-    # car_make
-    # car_model
-    # car_year
-    # id
-    # sentiment
-    # print(id)
-    # print(review)
-    # print(name)
-    # print(dealership)
-    # print(f'purchase_date= {purchase_date}')
-    # print(car_make)
-    # print(car_year)
-    
-    
-    # post_request(url, json_payload, **kwargs):
+            review[k]=v
 
-    # requests.post(url, params=kwargs, json=json_payload).
+        # url="https://us-south.functions.cloud.ibm.com/api/v1/namespaces/dnel_djangoserver-space/actions/dealership-package/review-post"
+        url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/review-post"
+        json_payload={}
+        json_payload["review"] = review    
+        result=post_request(url, json_payload, dealerId = dealer_id)
+        print(f'result is {result}')
     return HttpResponse(dealer_id)
 
