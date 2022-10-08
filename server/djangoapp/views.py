@@ -197,6 +197,11 @@ def post_review(request, dealer_id):
                 else:
                     review[k]= False
                 continue
+            if k == "id":
+                review[k]=int(request.POST.get('id'))
+                continue
+
+
             print(f'{k} is {v}')
             review[k]=v
 
@@ -206,5 +211,7 @@ def post_review(request, dealer_id):
         json_payload["review"] = review    
         result=post_request(url, json_payload, dealerId = dealer_id)
         print(f'result is {result}')
+    url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
     return HttpResponse(dealer_id)
+    #return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
 

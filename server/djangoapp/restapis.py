@@ -115,7 +115,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
             # Create a CarDealer object with values in `doc` object
             try:
                 if not dealer_doc["purchase"]:
-                    dealer_obj=DealerReview(dealership="n", name="n", purchase=dealer_doc["purchase"],
+                    dealer_obj=DealerReview(dealership="n", name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date="0", car_make="n",
                                     car_model="n",car_year="n",
                                     id=dealer_doc["id"])
@@ -125,7 +125,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                     car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
                                     id=dealer_doc["id"])
                 
-                dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review)
+                dealer_obj.sentiment = analyze_review_sentiments(dealer_obj.review +"hello hello hello")
                 
                               
                 results.append(dealer_obj)
