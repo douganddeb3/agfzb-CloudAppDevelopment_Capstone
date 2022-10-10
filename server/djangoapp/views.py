@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
@@ -212,6 +213,6 @@ def post_review(request, dealer_id):
         result=post_request(url, json_payload, dealerId = dealer_id)
         print(f'result is {result}')
     url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
-    return HttpResponse(dealer_id)
+    return HttpResponseRedirect(reverse('djangoapp:get_dealer_details', args=(dealer_id,)))
     #return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
 
