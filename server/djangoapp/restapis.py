@@ -13,9 +13,14 @@ def get_request(url, **kwargs):
     if 'st' in kwargs:    
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                                     params=kwargs['st'])
+    # dealerId in kwargs is to get dealership details
     elif 'dealerId' in kwargs:
         response = requests.get(url, headers={'Content-Type': 'application/json'},
                             params=kwargs['dealerId'])
+    # dealer_id in kwargs is used to get dealer reviews and is used so that the
+    # get_request method here can distinguish between the 2.
+    # But Cloudant code for getting review uses
+    # dealerId variable. So, below code replaces dealer_id with dealerId
     elif 'dealer_id' in kwargs:
         dealerId=kwargs.get('dealer_id').replace("dealer_id","dealerId")
         response = requests.get(url, headers={'Content-Type': 'application/json'},
