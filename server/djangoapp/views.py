@@ -178,7 +178,11 @@ def add_review(request, dealer_id):
         context={}
         context['dealer']=dealer_id
         context['name']= response[0].full_name
+        context['car_make']= response[0].car_make
+        context['car_model']= response[0].car_model
+        context['car_year']= response[0].car_year
         context['dealership']= 15
+        context['purchase'] = response[0].purchase
         return render(request, 'djangoapp/add_review.html', {'dealer':context})
     else:
         return redirect("djangoapp:login")
