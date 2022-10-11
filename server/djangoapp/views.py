@@ -171,15 +171,17 @@ def get_dealer_details(request, dealer_id):
         
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
-    # pass
-    # url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/api/dealership"    
-    url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
-    response = get_dealer_by_id(url, dealer_id)
-    context={}
-    context['dealer']=dealer_id
-    context['name']= response[0].full_name
-    context['dealership']= 15
-    return render(request, 'djangoapp/add_review.html', {'dealer':context})
+    user = request.user
+    if user.is_authenticated:
+        url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
+        response = get_dealer_by_id(url, dealer_id)
+        context={}
+        context['dealer']=dealer_id
+        context['name']= response[0].full_name
+        context['dealership']= 15
+        return render(request, 'djangoapp/add_review.html', {'dealer':context})
+    else:
+        return redirect("djangoapp:login")
 
 def post_review(request, dealer_id):
     # json_payload, **kwargs):
