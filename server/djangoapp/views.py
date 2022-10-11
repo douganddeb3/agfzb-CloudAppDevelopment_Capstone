@@ -173,52 +173,79 @@ def get_dealer_details(request, dealer_id):
 def add_review(request, dealer_id):
     user = request.user
     if user.is_authenticated:
-        url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
-        response = get_dealer_by_id(url, dealer_id)
-        context={}
-        context['dealer']=dealer_id
-        context['name']= response[0].full_name
-        context['car_make']= response[0].car_make
-        context['car_model']= response[0].car_model
-        context['car_year']= response[0].car_year
-        context['dealership']= 15
-        context['purchase'] = response[0].purchase
-        return render(request, 'djangoapp/add_review.html', {'dealer':context})
+        if request.method == "GET":
+            url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
+            response = get_dealer_by_id(url, dealer_id)
+            context={}
+            context['dealer']=dealer_id
+            context['name']= response[0].full_name
+            cars=CarModel.objects.filter(id=dealer_id)
+            print(f'CarMakes are {cars}')
+            return render(request, 'djangoapp/add_review.html', {'dealer':context})
+        elif request.method=="POST":
+            review ={}
+            for k,v in request.POST.items():
+                if k == "csrfmiddlewaretoken":
+                    continue
+                if k == "purchase":
+                    # Use request.POST.get() to get the value from the
+                    # radio button, and not just whether the radio button is on or not.
+                    # This is how to distinguish which radio button is selected
+                    if request.POST.get('purchase') == "true":
+                        review[k] = True
+                    else:
+                        review[k]= False
+                    continue
+                if k == "id":
+                    review[k]=int(request.POST.get('id'))
+                    continue
+
+
+                print(f'{k} is {v}')
+                review[k]=v
+            url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/review-post"
+            json_payload={}
+            json_payload["review"] = review    
+            result=post_request(url, json_payload, dealerId = dealer_id)
+            print(f'result is {result}')
+            url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
+            return HttpResponseRedirect(reverse('djangoapp:get_dealer_details', args=(dealer_id,)))
+            
     else:
         return redirect("djangoapp:login")
 
-def post_review(request, dealer_id):
-    # json_payload, **kwargs):
-    # pass
-    if request.method == "POST":
-        review ={}
-        for k,v in request.POST.items():
-            if k == "csrfmiddlewaretoken":
-                continue
-            if k == "purchase":
-                # Use request.POST.get() to get the value from the
-                # radio button, and not just whether the radio button is on or not.
-                # This is how to distinguish which radio button is selected
-                if request.POST.get('purchase') == "true":
-                    review[k] = True
-                else:
-                    review[k]= False
-                continue
-            if k == "id":
-                review[k]=int(request.POST.get('id'))
-                continue
+# def post_review(request, dealer_id):
+#     # json_payload, **kwargs):
+#     # pass
+#     if request.method == "POST":
+#         review ={}
+#         for k,v in request.POST.items():
+#             if k == "csrfmiddlewaretoken":
+#                 continue
+#             if k == "purchase":
+#                 # Use request.POST.get() to get the value from the
+#                 # radio button, and not just whether the radio button is on or not.
+#                 # This is how to distinguish which radio button is selected
+#                 if request.POST.get('purchase') == "true":
+#                     review[k] = True
+#                 else:
+#                     review[k]= False
+#                 continue
+#             if k == "id":
+#                 review[k]=int(request.POST.get('id'))
+#                 continue
 
 
-            print(f'{k} is {v}')
-            review[k]=v
+#             print(f'{k} is {v}')
+#             review[k]=v
 
-        # url="https://us-south.functions.cloud.ibm.com/api/v1/namespaces/dnel_djangoserver-space/actions/dealership-package/review-post"
-        url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/review-post"
-        json_payload={}
-        json_payload["review"] = review    
-        result=post_request(url, json_payload, dealerId = dealer_id)
-        print(f'result is {result}')
-    url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
-    return HttpResponseRedirect(reverse('djangoapp:get_dealer_details', args=(dealer_id,)))
-    #return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
+#         # url="https://us-south.functions.cloud.ibm.com/api/v1/namespaces/dnel_djangoserver-space/actions/dealership-package/review-post"
+#         url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/review-post"
+#         json_payload={}
+#         json_payload["review"] = review    
+#         result=post_request(url, json_payload, dealerId = dealer_id)
+#         print(f'result is {result}')
+#     url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
+#     return HttpResponseRedirect(reverse('djangoapp:get_dealer_details', args=(dealer_id,)))
+#     #return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
 
