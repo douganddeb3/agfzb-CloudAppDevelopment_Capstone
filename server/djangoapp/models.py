@@ -41,6 +41,7 @@ class CarModel(models.Model):
     name = models.CharField(max_length=20, default="Car Model")
     version = models.CharField(max_length=10, choices=VERSIONS, default=SEDAN)
     year = models.IntegerField(default="0000")
+   # uuid=models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     def __str__(self):
         return "Model: " + self.name 
 
