@@ -112,6 +112,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["data"]["docs"]
+        print(f'dealers in cf are {dealers}')
         # For each dealer object
         for dealer in dealers:
             # Get its content in `doc` object
@@ -124,6 +125,11 @@ def get_dealer_reviews_from_cf(url, dealer_id):
                                     car_model="n",car_year="n",
                                     id=dealer_doc["id"])
                 else:
+                    # print(f'dealer_doc["dealership"] IS {dealer_doc["dealership"]}')
+                    # print(f'dealer_doc["name"] IS {dealer_doc["name"]}')
+                    # print(f'dealer_doc["purchase"] IS {dealer_doc["purchase"]}')
+                    # print(f'dealer_doc["review"] IS {dealer_doc["review"]}')
+                    # print(f'dealer_doc["purchase_date"] IS {dealer_doc["purchase_date"]}')
                     dealer_obj = DealerReview(dealership=dealer_doc["dealership"], name=dealer_doc["name"], purchase=dealer_doc["purchase"],
                                     review=dealer_doc["review"], purchase_date=dealer_doc["purchase_date"], car_make=dealer_doc["car_make"],
                                     car_model=dealer_doc["car_model"],car_year=dealer_doc["car_year"],
