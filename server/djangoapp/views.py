@@ -177,6 +177,7 @@ def add_review(request, dealer_id):
             url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-dealership"
             response = get_dealer_by_id(url, dealer_id)
             context={}
+            context['dealership']= 15
             context['dealer']=dealer_id
             context['name']= response[0].full_name
             cars=CarModel.objects.all().filter(dealerId=dealer_id) 
@@ -186,10 +187,15 @@ def add_review(request, dealer_id):
         elif request.method=="POST":
             review ={}
             for k,v in request.POST.items():
-                if k == "id":
-                    #review[k]=int(request.POST.get('id'))
-                    auto= CarModel.objects.get(id=int(request.POST.get('id')))
-                    print(f'auto is {auto.name}')
+                # Get car info from CarModel using car id
+                if k == "car":
+                    car_id=request.POST.get('car')
+                    auto= CarModel.objects.get(id=car_id)
+                    print(f'auto is {auto.year} {auto.make.name} {auto.name}')
+                    review['car_make']= auto.make.name
+                    review['car_model']= auto.name
+                    review['car_year']=auto.year
+                    continue
                 if k == "csrfmiddlewaretoken":
                     continue
                 if k == "purchase":
@@ -201,9 +207,11 @@ def add_review(request, dealer_id):
                     else:
                         review[k]= False
                     continue
-                # if k == "id":
-                #     review[k]=int(request.POST.get('id'))
-                #     continue
+                if k == "id":
+                    print(f'v is {v}')
+                    review[k]=int(v)
+                    continue
+                print(f'k is {k} which is {v}')
                 review[k]=v
             url="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/review-post"
             json_payload={}
