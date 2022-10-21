@@ -99,9 +99,12 @@ def get_dealerships(request):
         dealers_temp=[]
         for dealer in dealer_list:
             dealers_temp.append([{"city":dealer.city},
-                     {"state":dealer.state},
+                     {"st":dealer.st},
                      {"full_name":dealer.full_name},
-                     {"id": dealer.id}])
+                     {"id": dealer.id},
+                     {"address":dealer.address},
+                     {"zip":dealer.zip},
+                     {"st":dealer.st}])
         context['dealers']=dealers_temp   
         return render(request, 'djangoapp/index.html', {'dealers':context['dealers']})
 
@@ -165,10 +168,12 @@ def get_dealer_details(request, dealer_id):
         url ="https://us-south.functions.appdomain.cloud/api/v1/web/dnel_djangoserver-space/dealership-package/get-reviews"
         #url = "https://6c1cc8db.us-south.apigw.appdomain.cloud/dealer/get_reviews"
         dealer_reviews = get_dealer_reviews_from_cf(url, dealer_id)
-        context['dealer_reviews']= dealer_reviews
-        return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
-
-        
+        if dealer_reviews:
+            context['dealer_reviews']= dealer_reviews
+            return render(request, 'djangoapp/dealer_details.html', {'dealer_reviews':context['dealer_reviews']})
+        else:
+            context['dealer_id'] = dealer_id
+            return render(request, 'djangoapp/dealer_details.html', {'dealer_id':context['dealer_id']})        
 # Create a `add_review` view to submit a review
 def add_review(request, dealer_id):
     user = request.user

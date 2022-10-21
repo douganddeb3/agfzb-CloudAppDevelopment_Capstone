@@ -46,7 +46,7 @@
                         </form>
                     </li>
                     {% endif %}
-                    <li>
+                    <!-- <li>
                         <form class="form-inline" action="{% url 'djangoapp:get_dealers_by_state_abbr' %}" method="post">
                             {% csrf_token %}
                             <div class="input-group">
@@ -57,20 +57,21 @@
                                     <option value="NY">NY</option>
                                     <option value="MN">MN</option>
                                   </select>
-                                <!-- <input type="text" class="form-control" placeholder="2 Letter State" name="state" > -->
+                                
                                 <button class="btn btn-primary" type="submit">Search</button>
                             </div>
                         </form>
-                    </li>
-             </ul>
+                    </li> -->
+                 </ul>
             </div>
         </nav>
     
     
     <!--Add review form here -->
         <form id="MyForm" action="{% url 'djangoapp:add_review' dealer.dealer %}" method="post">
+            {% csrf_token %}
             <div class="container"> <!--Style root div with .container class -->
-                {% csrf_token %}
+                
                 <h1>{{dealer.name}}</h1>
                 <h1>Review</h1>
                 <hr>
