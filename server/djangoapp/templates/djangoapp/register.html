@@ -8,7 +8,7 @@
 <body>
     <form action="{% url 'djangoapp:register' %}" method="post">
         <div class="container"> <!--Style root div with .container class -->
-            <!-- {% csrf_token %} -->
+            {% csrf_token %}
             <h1>Sign Up</h1>
             <hr>
             <div class="form-group"> <!--Style second div with .form-group class -->

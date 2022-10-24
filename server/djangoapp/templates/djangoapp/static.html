@@ -14,7 +14,7 @@
             {% else %}
             <li>
                 <form class="form-inline" action="#" method="post">
-                    <!-- {% csrf_token %} -->
+                    {% csrf_token %}
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Username" name="username" >
                         <input type="password" class="form-control" placeholder="Password" name="psw" >
