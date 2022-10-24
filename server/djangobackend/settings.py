@@ -30,7 +30,9 @@ APPEND_SLASH = True
 ALLOWED_HOSTS = ["localhost", 
                  "dnel.mybluemix.net",
                  "dnel.mybluemix.net/static",
+                 "douganddeb3-8000.theiadocker-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai",
 ]
+CSRF_TRUSTED_ORIGINS = ['dnel.mybluemix.net', 'dnel.mybluemix.net/static', 'douganddeb3-8000.theiadocker-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/','localhost' ]
 
 
 # Application definition
